@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
+import { X, 
+  Send, 
+  Sparkles 
+} from 'lucide-react';
 import { ReportData } from '../types';
 
 interface AIChatProps {

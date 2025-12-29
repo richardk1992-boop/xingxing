@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { 
-  PieChart, Pie, Cell, ResponsiveContainer, Legend, Sector, Label,
+  PieChart, Pie, Cell, ResponsiveContainer, Legend, Sector,
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as LineTooltip
 } from 'recharts';
 import { EmotionData, CognitiveData } from '../types';
@@ -9,7 +9,17 @@ interface EmotionPieChartProps {
   data: EmotionData[];
 }
 
-const renderActiveShape = (props: any) => {
+const renderActiveShape = (props: {
+  cx: number;
+  cy: number;
+  innerRadius: number;
+  outerRadius: number;
+  startAngle: number;
+  endAngle: number;
+  fill: string;
+  payload: { name: string };
+  value: number;
+}) => {
   const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value } = props;
 
   return (
@@ -60,7 +70,7 @@ export const EmotionPieChart: React.FC<EmotionPieChartProps> = ({ data }) => {
     setActiveIndex(defaultActiveIndex);
   }, [defaultActiveIndex]);
 
-  const onPieEnter = useCallback((_: any, index: number) => {
+  const onPieEnter = useCallback((_: unknown, index: number) => {
     setActiveIndex(index);
   }, []);
 
@@ -70,6 +80,11 @@ export const EmotionPieChart: React.FC<EmotionPieChartProps> = ({ data }) => {
 
   return (
     <div className="h-64 w-full font-sans">
+      <style>{`
+        .recharts-wrapper *:focus {
+          outline: none;
+        }
+      `}</style>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
